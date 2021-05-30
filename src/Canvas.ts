@@ -9,6 +9,7 @@ export interface ICanvas {
   keyboard: any;
   timestamp: DOMHighResTimeStamp;
   objects: any[];
+  add: Function;
 }
 
 interface Canvas extends ICanvas {}
@@ -35,7 +36,7 @@ class Canvas {
     this.ctx.restore();
 
     this.objects.forEach((object) => {
-      object.draw();
+      object.update();
     });
 
     window.requestAnimationFrame((timestamp) => this.draw(timestamp));

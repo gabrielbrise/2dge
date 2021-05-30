@@ -1,6 +1,6 @@
-import ICanvas from "./Canvas";
+import { ICanvas } from "./Canvas";
 
-interface SpriteProps {
+export interface SpriteProps {
   width: number;
   height: number;
   src: string[];
