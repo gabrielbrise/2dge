@@ -10,6 +10,7 @@ export interface ICanvas {
   timestamp: DOMHighResTimeStamp;
   objects: any[];
   add: Function;
+  remove: Function;
 }
 
 interface Canvas extends ICanvas {}
@@ -52,6 +53,11 @@ class Canvas {
 
   add(newObject: any) {
     this.objects.push(newObject);
+  }
+
+  remove(id: string) {
+    this.objects = this.objects.filter((obj) => obj.id !== id);
+    console.log(this.objects.length);
   }
 }
 

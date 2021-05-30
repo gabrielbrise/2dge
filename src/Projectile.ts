@@ -1,7 +1,9 @@
-import { moveStep, targetAngle } from "./utils/coordinates";
+import { isOnScreen, moveStep, targetAngle } from "./utils/coordinates";
 import Sprite from "./Sprite";
 import { ICanvas } from "./Canvas";
 import { Coordinates } from "./constants/types";
+
+const uuidv4 = require("uuid/v4");
 
 interface ProjectileProps {
   width: number;
@@ -14,6 +16,7 @@ interface ProjectileProps {
 }
 
 interface Projectile extends ProjectileProps {
+  id: string;
   targetAngle: number;
   key: any;
 }
@@ -42,34 +45,30 @@ class Projectile extends Sprite {
     this.key = canvas.keyboard;
     this.origin = origin;
     this.target = target;
+    this.id = uuidv4();
   }
 
   update = () => {
+    this.colision();
+    this.move();
     this.animate();
-    this.posX = this.posX + this.move().x;
-    this.posY = this.posY + this.move().y;
-
     this.draw();
   };
 
-  animate = () => {
-    const frame = Math.floor(
-      ((this.canvas.timestamp + this.animationTime) /
-        (this.animationTime / this.animationFrames)) %
-        this.animationFrames
-    );
-    this.image.src = this.src[frame];
+  move = () => {
+    const [x, y] = moveStep(this.origin, this.target, this.velocity);
+    this.posX = this.posX + x;
+    this.posY = this.posY + y;
   };
 
-  move = () => {
-    console.log(this);
-    const ms = moveStep(this.origin, this.target, this.velocity);
+  colision = () => {
+    if (!isOnScreen([this.posX, this.posY], this.canvas)) {
+      this.destroy();
+    }
+  };
 
-    return {
-      x: ms[0],
-      y: ms[1],
-      isMoving: true,
-    };
+  destroy = () => {
+    this.canvas.remove(this.id);
   };
 }
 

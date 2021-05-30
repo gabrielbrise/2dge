@@ -1,3 +1,4 @@
+import { ICanvas } from "../Canvas";
 import { Coordinates } from "../constants/types";
 
 export function targetAngle(origin: Coordinates, target: Coordinates) {
@@ -5,6 +6,14 @@ export function targetAngle(origin: Coordinates, target: Coordinates) {
   const deltaY = target[1] - origin[1];
   const thetaRadians = Math.atan2(deltaY, deltaX);
   return thetaRadians;
+}
+
+export function isOnScreen(coordinates: Coordinates, canvas: ICanvas) {
+  const [x, y] = coordinates;
+  const isOutsideX = x > canvas.width || x < 0;
+  const isOutsideY = y > canvas.height || y < 0;
+  if (isOutsideX || isOutsideY) return false;
+  return true;
 }
 
 export function moveStep(

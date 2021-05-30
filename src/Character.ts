@@ -4,11 +4,15 @@ import Sprite from "./Sprite";
 import { ICanvas } from "./Canvas";
 import { calculateDirectionVector, isMoving } from "./utils/coordinates";
 
+const uuidv4 = require("uuid/v4");
+
 interface ICharacter {
   key: any;
 }
 
-interface Character extends ICharacter {}
+interface Character extends ICharacter {
+  id: string;
+}
 
 class Character extends Sprite {
   constructor(width: number, height: number, src: string[], canvas: ICanvas) {
@@ -23,6 +27,7 @@ class Character extends Sprite {
     });
     this.key = canvas.keyboard;
     this.key.addAction("click", this.action);
+    this.id = uuidv4();
   }
 
   update = () => {
