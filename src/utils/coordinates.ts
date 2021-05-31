@@ -27,8 +27,9 @@ export function moveStep(
   return [stepX, stepY];
 }
 
-export function isMoving(key: any) {
-  return key.w | key.s | key.a | key.d;
+export function isMoving(key: any): Boolean {
+  const pressedKey = key.w | key.s | key.a | key.d;
+  return !!pressedKey;
 }
 
 export function calculateDirectionVector(key: any) {
