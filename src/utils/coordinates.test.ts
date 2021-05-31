@@ -1,6 +1,13 @@
 import Canvas, { ICanvas } from "../Canvas";
 import { Coordinates } from "../constants/types";
-import { targetAngle, moveStep, isOnScreen } from "./coordinates";
+import Keyboard from "../Keyboard";
+import {
+  targetAngle,
+  moveStep,
+  isOnScreen,
+  isMoving,
+  calculateDirectionVector,
+} from "./coordinates";
 
 test("should give angle in radians betwen two coordinates", () => {
   const origin: Coordinates = [0, 0];
@@ -33,5 +40,39 @@ describe("test if coordinates are inside canvas view", () => {
     const result = isOnScreen(coordinates, canvas);
     const expected = true;
     expect(result).toBe(expected);
+  });
+});
+
+describe("test if any keys related to moving the character are being pressed", () => {
+  test("should return true if pressing one of the keys", () => {
+    let key = new Keyboard();
+    key.s = true;
+    const result = isMoving(key);
+    const expected = true;
+    expect(result).toBe(expected);
+  });
+  test("should return false if none of the keys are being pressed", () => {
+    let key = new Keyboard();
+    const result = isMoving(key);
+    const expected = false;
+    expect(result).toBe(expected);
+  });
+});
+
+describe("calculate the direction vector based on pressed keys", () => {
+  test("should return values that correspond to the direction if moving keys are being pressed", () => {
+    let key = new Keyboard();
+    key.s = true;
+    key.d = true;
+    const result = calculateDirectionVector(key);
+    const expected = { x: 1, y: 1 };
+    expect(result).toStrictEqual(expected);
+  });
+
+  test("should return 0 for both x and y if no moving keys are being pressed", () => {
+    let key = new Keyboard();
+    const result = calculateDirectionVector(key);
+    const expected = { x: 0, y: 0 };
+    expect(result).toStrictEqual(expected);
   });
 });
