@@ -89,7 +89,7 @@ class Projectile extends Sprite {
           (object) => object.collisionRectangles
         )
         filterCollisionableObjects.map((object) => {
-          object.colisionRectangles.map((objectColRect: RectangleT) => {
+          object.collisionRectangles.map((objectColRect: RectangleT) => {
             if (
               this.id !== object.id &&
               rectIntersect(

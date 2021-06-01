@@ -20,11 +20,11 @@ class Collision extends GameObject {
     this.collisionRectangles = collisionRectangles
   }
 
-  colision() {
+  collision() {
     this.onCollision &&
       this.collisionRectangles.map((collisionRect) => {
         this.canvas.objects.map((object) => {
-          object.colisionRectangles.map((objectColRect: RectangleT) => {
+          object.collisionRectangles.map((objectColRect: RectangleT) => {
             if (
               rectIntersect(
                 collisionRect.posX,
