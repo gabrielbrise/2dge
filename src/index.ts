@@ -6,8 +6,8 @@ import Rectangle from './Rectangle'
 const FPS: number = 60
 
 function init() {
-  let canvas: Canvas
-  canvas = new Canvas()
+  Canvas.start()
+  const canvas = Canvas.get()
   const character = new Character(32, 32, RedGirl, canvas)
   const wall = new Rectangle({
     width: 200,

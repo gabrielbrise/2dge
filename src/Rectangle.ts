@@ -25,7 +25,6 @@ class Rectangle extends Collision {
     super({
       onCollision,
       collisionRectangles: [{ posX, posY, width, height }],
-      canvas,
     })
     this.width = width
     this.height = height

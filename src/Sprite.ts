@@ -1,40 +1,32 @@
-import { ICanvas } from "./Canvas";
+import Canvas, { ICanvas } from './Canvas'
 
 export interface SpriteProps {
-  width: number;
-  height: number;
-  src: string[];
-  canvas: ICanvas;
-  animationTime: number;
-  posX: number;
-  posY: number;
+  width: number
+  height: number
+  src: string[]
+  animationTime: number
+  posX: number
+  posY: number
 }
 
 interface Sprite extends SpriteProps {
-  image: HTMLImageElement;
-  animationFrames: number;
+  image: HTMLImageElement
+  animationFrames: number
+  canvas: ICanvas
 }
 
 class Sprite {
-  constructor({
-    width,
-    height,
-    src,
-    animationTime,
-    posX,
-    posY,
-    canvas,
-  }: SpriteProps) {
-    this.width = width;
-    this.height = height;
-    this.src = src;
-    this.posX = posX;
-    this.posY = posY;
-    this.image = new Image();
-    this.image.src = this.src[0];
-    this.canvas = canvas;
-    this.animationFrames = src.length;
-    this.animationTime = animationTime;
+  constructor({ width, height, src, animationTime, posX, posY }: SpriteProps) {
+    this.width = width
+    this.height = height
+    this.src = src
+    this.posX = posX
+    this.posY = posY
+    this.image = new Image()
+    this.image.src = this.src[0]
+    this.canvas = Canvas.get()
+    this.animationFrames = src.length
+    this.animationTime = animationTime
   }
 
   draw() {
@@ -44,7 +36,7 @@ class Sprite {
       this.posY,
       this.width,
       this.height
-    );
+    )
   }
 
   animate() {
@@ -52,9 +44,9 @@ class Sprite {
       ((this.canvas.timestamp + this.animationTime) /
         (this.animationTime / this.animationFrames)) %
         this.animationFrames
-    );
-    this.image.src = this.src[frame];
+    )
+    this.image.src = this.src[frame]
   }
 }
 
-export default Sprite;
+export default Sprite

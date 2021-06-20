@@ -1,10 +1,9 @@
-import { ICanvas } from './Canvas'
+import Canvas from './Canvas'
 import { RectangleT } from './constants/types'
 import GameObject from './GameObject'
 import { rectIntersect } from './utils/collision'
 
-interface CollisionProps {
-  canvas: ICanvas
+export interface CollisionProps {
   collisionRectangles: RectangleT[]
   onCollision?: Function
 }
@@ -14,8 +13,8 @@ interface Collision extends CollisionProps {
 }
 
 class Collision extends GameObject {
-  constructor({ onCollision, collisionRectangles, canvas }: CollisionProps) {
-    super(canvas)
+  constructor({ onCollision, collisionRectangles }: CollisionProps) {
+    super()
     this.onCollision = onCollision
     this.collisionRectangles = collisionRectangles
   }
@@ -23,7 +22,7 @@ class Collision extends GameObject {
   collision() {
     this.onCollision &&
       this.collisionRectangles.map((collisionRect) => {
-        this.canvas.objects.map((object) => {
+        Canvas.get().objects.map((object: any) => {
           object.collisionRectangles.map((objectColRect: RectangleT) => {
             if (
               rectIntersect(

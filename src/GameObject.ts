@@ -1,18 +1,17 @@
-import { ICanvas } from './Canvas'
+import Canvas from './Canvas'
 
 const uuidv4 = require('uuid/v4')
 
-interface GameObjectProps {
-  canvas: ICanvas
-}
+interface GameObjectProps {}
 
 interface GameObject extends GameObjectProps {
   id: string
+  [arg: string]: any
 }
 
 class GameObject {
-  constructor(canvas: ICanvas) {
-    this.canvas = canvas
+  constructor() {
+    this.canvas = Canvas.get()
     this.id = uuidv4()
     this.destroy = this.destroy.bind(this)
   }

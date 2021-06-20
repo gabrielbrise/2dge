@@ -1,6 +1,6 @@
 import { isOnScreen, moveStep, targetAngle } from './utils/coordinates'
 import Sprite from './Sprite'
-import { ICanvas } from './Canvas'
+import Canvas from './Canvas'
 import { Coordinates, RectangleT } from './constants/types'
 import { rectIntersect } from './utils/collision'
 
@@ -10,7 +10,6 @@ interface ProjectileProps {
   width: number
   height: number
   src: string[]
-  canvas: ICanvas
   velocity: number
   origin: Coordinates
   target: Coordinates
@@ -29,7 +28,6 @@ class Projectile extends Sprite {
     width,
     height,
     src,
-    canvas,
     velocity,
     origin,
     target,
@@ -38,14 +36,13 @@ class Projectile extends Sprite {
       width,
       height,
       src,
-      canvas,
       animationTime: 600,
       posX: origin[0],
       posY: origin[1],
     })
     this.velocity = velocity
     this.targetAngle = targetAngle(origin, target)
-    this.key = canvas.keyboard
+    this.key = Canvas.get().keyboard
     this.origin = origin
     this.target = target
     this.id = uuidv4()
