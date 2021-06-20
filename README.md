@@ -4,7 +4,7 @@ A simple game engine that is being developed as an object oriented programming e
 
 ## Singletons
 
-Some classes are only instancied a single time during the game initialization. There can be no more than one of the following, thus they are singletons:
+Some classes are only instanced a single time during the game initialization. There can be no more than one of the following, thus they are singletons:
 
 - Canvas
 - Keyboard
