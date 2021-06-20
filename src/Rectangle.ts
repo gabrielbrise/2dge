@@ -1,38 +1,25 @@
-import { ICanvas } from './singletons/Canvas'
-import Collision from './Collision'
+import Canvas, { ICanvas } from './singletons/Canvas'
 
-interface RectangleProps {
+export interface RectangleProps {
   width: number
   height: number
   posX: number
   posY: number
-  onCollision?: Function
+}
+
+interface IRectangle extends RectangleProps {
   canvas: ICanvas
 }
 
-interface Rectangle extends RectangleProps {}
+interface Rectangle extends IRectangle {}
 
-class Rectangle extends Collision {
-  constructor({
-    width,
-    height,
-    posX,
-    posY,
-    onCollision,
-    canvas,
-  }: RectangleProps) {
-    super({
-      onCollision,
-      collisionRectangles: [{ posX, posY, width, height }],
-    })
+class Rectangle {
+  constructor({ width, height, posX, posY }: RectangleProps) {
     this.width = width
     this.height = height
     this.posX = posX
     this.posY = posY
-  }
-
-  update() {
-    this.draw()
+    this.canvas = Canvas.get()
   }
 
   draw() {

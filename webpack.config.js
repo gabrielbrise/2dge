@@ -1,39 +1,39 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: "./src/index.ts",
-  mode: "development",
-  devtool: "inline-source-map",
+  entry: './demo/index.ts',
+  mode: 'development',
+  devtool: 'inline-source-map',
   devServer: {
-    contentBase: "./dist",
+    contentBase: './dist',
     hot: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Output Management",
+      title: 'Output Management',
     }),
   ],
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
-    publicPath: "/",
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     clean: true,
   },
-};
+}

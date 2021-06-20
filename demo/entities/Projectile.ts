@@ -1,8 +1,9 @@
-import { isOnScreen, moveStep, targetAngle } from './utils/coordinates'
-import Sprite from './Sprite'
-import Canvas from './singletons/Canvas'
-import { Coordinates } from './constants/types'
-import Collision, { ICollision } from './Collision'
+import { isOnScreen, moveStep, targetAngle } from '../../src/utils/coordinates'
+import Sprite from '../../src/Sprite'
+import Canvas from '../../src/singletons/Canvas'
+import { Coordinates } from '../../src/constants/types'
+import Collision, { ICollision } from '../../src/Collision'
+import GameObject from '../../src/GameObject'
 
 const uuidv4 = require('uuid/v4')
 
@@ -22,7 +23,7 @@ interface Projectile extends ProjectileProps {
   collision: ICollision
 }
 
-class Projectile extends Sprite {
+class Projectile extends GameObject {
   constructor({
     width,
     height,
@@ -31,7 +32,8 @@ class Projectile extends Sprite {
     origin,
     target,
   }: ProjectileProps) {
-    super({
+    super()
+    this.sprite = new Sprite({
       width,
       height,
       src,
@@ -53,31 +55,32 @@ class Projectile extends Sprite {
       collisionRectangles: [
         { posX: origin[0], posY: origin[1], width, height },
       ],
+      id: this.id,
     })
   }
 
   update = () => {
-    if (!isOnScreen([this.posX, this.posY], this.canvas)) {
+    if (!isOnScreen([this.sprite.posX, this.sprite.posY], this.canvas)) {
       this.destroy()
     }
     this.collision.collisionRectangles = [
       {
-        posX: this.posX,
-        posY: this.posY,
-        width: this.width,
-        height: this.height,
+        posX: this.sprite.posX,
+        posY: this.sprite.posY,
+        width: this.sprite.width,
+        height: this.sprite.height,
       },
     ]
     this.collision.check()
     this.move()
-    this.animate()
-    this.draw()
+    this.sprite.animate()
+    this.sprite.draw()
   }
 
   move = () => {
     const [x, y] = moveStep(this.origin, this.target, this.velocity)
-    this.posX = this.posX + x
-    this.posY = this.posY + y
+    this.sprite.posX = this.sprite.posX + x
+    this.sprite.posY = this.sprite.posY + y
   }
 
   destroy = () => {
