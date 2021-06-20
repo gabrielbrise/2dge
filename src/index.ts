@@ -1,4 +1,4 @@
-import Canvas from './Canvas'
+import Canvas from './singletons/Canvas'
 import Character from './Character'
 import RedGirl from './assets/characters/RedGirl'
 import Rectangle from './Rectangle'

@@ -1,4 +1,4 @@
-import Canvas, { ICanvas } from './Canvas'
+import Canvas, { ICanvas } from './singletons/Canvas'
 
 export interface SpriteProps {
   width: number

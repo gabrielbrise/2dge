@@ -1,8 +1,8 @@
 import { isOnScreen, moveStep, targetAngle } from './utils/coordinates'
 import Sprite from './Sprite'
-import Canvas from './Canvas'
-import { Coordinates, RectangleT } from './constants/types'
-import { rectIntersect } from './utils/collision'
+import Canvas from './singletons/Canvas'
+import { Coordinates } from './constants/types'
+import Collision, { ICollision } from './Collision'
 
 const uuidv4 = require('uuid/v4')
 
@@ -19,8 +19,7 @@ interface Projectile extends ProjectileProps {
   id: string
   targetAngle: number
   key: any
-  onCollision: Function
-  collisionRectangles: RectangleT[]
+  collision: ICollision
 }
 
 class Projectile extends Sprite {
@@ -46,20 +45,22 @@ class Projectile extends Sprite {
     this.origin = origin
     this.target = target
     this.id = uuidv4()
-    this.onCollision = (id1: string, id2: string) => {
-      console.log(id1, id2)
-      this.destroy()
-    }
-    this.collisionRectangles = [
-      { posX: origin[0], posY: origin[1], width, height },
-    ]
+    this.collision = new Collision({
+      onCollision: (id1: string, id2: string) => {
+        console.log(id1, id2)
+        this.destroy()
+      },
+      collisionRectangles: [
+        { posX: origin[0], posY: origin[1], width, height },
+      ],
+    })
   }
 
   update = () => {
     if (!isOnScreen([this.posX, this.posY], this.canvas)) {
       this.destroy()
     }
-    this.collisionRectangles = [
+    this.collision.collisionRectangles = [
       {
         posX: this.posX,
         posY: this.posY,
@@ -67,7 +68,7 @@ class Projectile extends Sprite {
         height: this.height,
       },
     ]
-    this.collision()
+    this.collision.check()
     this.move()
     this.animate()
     this.draw()
@@ -77,34 +78,6 @@ class Projectile extends Sprite {
     const [x, y] = moveStep(this.origin, this.target, this.velocity)
     this.posX = this.posX + x
     this.posY = this.posY + y
-  }
-
-  collision() {
-    this.onCollision &&
-      this.collisionRectangles.map((collisionRect) => {
-        const filterCollisionableObjects = this.canvas.objects.filter(
-          (object) => object.collisionRectangles
-        )
-        filterCollisionableObjects.map((object) => {
-          object.collisionRectangles.map((objectColRect: RectangleT) => {
-            if (
-              this.id !== object.id &&
-              rectIntersect(
-                collisionRect.posX,
-                collisionRect.posY,
-                collisionRect.width,
-                collisionRect.height,
-                objectColRect.posX,
-                objectColRect.posY,
-                objectColRect.width,
-                objectColRect.height
-              )
-            ) {
-              this.onCollision(this.id, object.id)
-            }
-          })
-        })
-      })
   }
 
   destroy = () => {

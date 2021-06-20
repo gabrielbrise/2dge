@@ -1,6 +1,5 @@
-import { ICanvas } from './Canvas'
+import { ICanvas } from './singletons/Canvas'
 import Collision from './Collision'
-import { RectangleT } from './constants/types'
 
 interface RectangleProps {
   width: number

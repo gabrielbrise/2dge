@@ -1,6 +1,6 @@
-import Canvas from '../Canvas'
+import Canvas from '../singletons/Canvas'
 import { Coordinates } from '../constants/types'
-import Keyboard from '../Keyboard'
+import Keyboard from '../singletons/Keyboard'
 import {
   targetAngle,
   moveStep,

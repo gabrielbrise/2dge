@@ -1,7 +1,7 @@
 import Projectile from './Projectile'
 import Bullet from './assets/bullets/Bullet.png'
 import Sprite from './Sprite'
-import { ICanvas } from './Canvas'
+import { ICanvas } from './singletons/Canvas'
 import { calculateDirectionVector, isMoving } from './utils/coordinates'
 
 const uuidv4 = require('uuid/v4')

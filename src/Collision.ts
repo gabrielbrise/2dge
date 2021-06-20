@@ -1,6 +1,5 @@
-import Canvas from './Canvas'
+import Canvas, { ICanvas } from './singletons/Canvas'
 import { RectangleT } from './constants/types'
-import GameObject from './GameObject'
 import { rectIntersect } from './utils/collision'
 
 export interface CollisionProps {
@@ -8,23 +7,31 @@ export interface CollisionProps {
   onCollision?: Function
 }
 
-interface Collision extends CollisionProps {
+export interface ICollision extends CollisionProps {
   id: string
+  canvas: ICanvas
+  check: Function
 }
 
-class Collision extends GameObject {
+interface Collision extends ICollision {}
+
+class Collision {
   constructor({ onCollision, collisionRectangles }: CollisionProps) {
-    super()
     this.onCollision = onCollision
     this.collisionRectangles = collisionRectangles
+    this.canvas = Canvas.get()
   }
 
-  collision() {
+  check() {
     this.onCollision &&
       this.collisionRectangles.map((collisionRect) => {
-        Canvas.get().objects.map((object: any) => {
+        const filterCollisionableObjects = this.canvas.objects.filter(
+          (object) => object.collisionRectangles
+        )
+        filterCollisionableObjects.map((object) => {
           object.collisionRectangles.map((objectColRect: RectangleT) => {
             if (
+              this.id !== object.id &&
               rectIntersect(
                 collisionRect.posX,
                 collisionRect.posY,
