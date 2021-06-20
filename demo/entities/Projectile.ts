@@ -49,7 +49,6 @@ class Projectile extends GameObject {
     this.id = uuidv4()
     this.collision = new Collision({
       onCollision: (id1: string, id2: string) => {
-        console.log(id1, id2)
         this.destroy()
       },
       collisionRectangles: [

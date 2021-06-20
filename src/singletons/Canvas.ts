@@ -80,7 +80,6 @@ class Canvas {
 
   remove(id: string) {
     this.objects = this.objects.filter((obj) => obj.id !== id)
-    console.log(this.objects.length)
   }
 }
 

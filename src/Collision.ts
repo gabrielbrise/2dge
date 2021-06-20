@@ -29,7 +29,6 @@ class Collision {
         const filterCollisionableObjects = this.canvas.objects.filter(
           (object) => object.collision
         )
-        console.log(this.onCollision, this.collisionRectangles)
         filterCollisionableObjects.map((object) => {
           object.collision.collisionRectangles.map(
             (objectColRect: RectangleT) => {
