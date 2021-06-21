@@ -4,6 +4,7 @@ import Canvas from '../../src/singletons/Canvas'
 import { Coordinates } from '../../src/constants/types'
 import Collision, { ICollision } from '../../src/Collision'
 import GameObject from '../../src/GameObject'
+import Position from '../../src/Position'
 
 const uuidv4 = require('uuid/v4')
 
@@ -33,43 +34,33 @@ class Projectile extends GameObject {
     target,
   }: ProjectileProps) {
     super()
+    this.position = new Position({ x: origin[0], y: origin[1] })
     this.sprite = new Sprite({
       width,
       height,
       src,
       animationTime: 600,
-      posX: origin[0],
-      posY: origin[1],
+      position: this.position,
     })
     this.velocity = velocity
     this.targetAngle = targetAngle(origin, target)
-    this.key = Canvas.get().keyboard
+    this.key = this.canvas.keyboard
     this.origin = origin
     this.target = target
     this.id = uuidv4()
     this.collision = new Collision({
-      onCollision: (id1: string, id2: string) => {
+      onCollision: () => {
         this.destroy()
       },
-      collisionRectangles: [
-        { posX: origin[0], posY: origin[1], width, height },
-      ],
+      collisionRectangles: [{ position: this.position, width, height }],
       id: this.id,
     })
   }
 
   update = () => {
-    if (!isOnScreen([this.sprite.posX, this.sprite.posY], this.canvas)) {
+    if (!isOnScreen([this.position.x, this.position.y], this.canvas)) {
       this.destroy()
     }
-    this.collision.collisionRectangles = [
-      {
-        posX: this.sprite.posX,
-        posY: this.sprite.posY,
-        width: this.sprite.width,
-        height: this.sprite.height,
-      },
-    ]
     this.collision.check()
     this.move()
     this.sprite.animate()
@@ -78,8 +69,8 @@ class Projectile extends GameObject {
 
   move = () => {
     const [x, y] = moveStep(this.origin, this.target, this.velocity)
-    this.sprite.posX = this.sprite.posX + x
-    this.sprite.posY = this.sprite.posY + y
+    this.position.x = this.position.x + x
+    this.position.y = this.position.y + y
   }
 
   destroy = () => {

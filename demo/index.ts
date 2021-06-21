@@ -6,12 +6,11 @@ import Wall from './entities/Wall'
 function init() {
   Canvas.start()
   const canvas = Canvas.get()
-  const character = new Character(32, 32, RedGirl, canvas)
+  const character = new Character(32, 32, RedGirl)
   const wall = new Wall({
     width: 200,
     height: 20,
-    posX: 300,
-    posY: 300,
+    position: { x: 300, y: 300 },
   })
   canvas.add(wall)
   canvas.add(character)

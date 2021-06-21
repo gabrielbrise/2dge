@@ -4,6 +4,7 @@ import Sprite from '../../src/Sprite'
 import { ICanvas } from '../../src/singletons/Canvas'
 import { calculateDirectionVector, isMoving } from '../../src/utils/coordinates'
 import GameObject from '../../src/GameObject'
+import Position from '../../src/Position'
 
 const uuidv4 = require('uuid/v4')
 
@@ -16,18 +17,18 @@ interface Character extends ICharacter {
 }
 
 class Character extends GameObject {
-  constructor(width: number, height: number, src: string[], canvas: ICanvas) {
+  constructor(width: number, height: number, src: string[]) {
     super()
-    this.key = canvas.keyboard
+    this.key = this.canvas.keyboard
     this.key.addAction('click', this.action)
     this.id = uuidv4()
+    this.position = new Position({ x: 150, y: 150 })
     this.sprite = new Sprite({
       width,
       height,
       src,
       animationTime: 600,
-      posX: 150,
-      posY: 150,
+      position: this.position,
     })
   }
 
@@ -43,7 +44,7 @@ class Character extends GameObject {
       width: 8,
       height: 8,
       src: [Bullet],
-      origin: [this.sprite.posX, this.sprite.posY],
+      origin: [this.position.x, this.position.y],
       target: [e.x, e.y],
       velocity: 10,
     })
@@ -53,10 +54,8 @@ class Character extends GameObject {
 
   move = () => {
     const vector = calculateDirectionVector(this.key)
-    const newPosX = this.sprite.posX + vector.x
-    const newPosY = this.sprite.posY + vector.y
-    this.sprite.posX = newPosX
-    this.sprite.posY = newPosY
+    this.position.x = this.position.x + vector.x
+    this.position.y = this.position.y + vector.y
     this.sprite.animate()
   }
 }

@@ -1,3 +1,4 @@
+import { IPosition } from './Position'
 import Canvas, { ICanvas } from './singletons/Canvas'
 
 export interface SpriteProps {
@@ -5,8 +6,7 @@ export interface SpriteProps {
   height: number
   src: string[]
   animationTime: number
-  posX: number
-  posY: number
+  position: IPosition
 }
 
 interface Sprite extends SpriteProps {
@@ -16,12 +16,11 @@ interface Sprite extends SpriteProps {
 }
 
 class Sprite {
-  constructor({ width, height, src, animationTime, posX, posY }: SpriteProps) {
+  constructor({ width, height, src, animationTime, position }: SpriteProps) {
     this.width = width
     this.height = height
     this.src = src
-    this.posX = posX
-    this.posY = posY
+    this.position = position
     this.image = new Image()
     this.image.src = this.src[0]
     this.canvas = Canvas.get()
@@ -32,8 +31,8 @@ class Sprite {
   draw() {
     this.canvas.ctx.drawImage(
       this.image,
-      this.posX,
-      this.posY,
+      this.position.x,
+      this.position.y,
       this.width,
       this.height
     )

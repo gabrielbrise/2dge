@@ -1,5 +1,6 @@
 import Collision, { ICollision } from '../../src/Collision'
 import GameObject from '../../src/GameObject'
+import Position from '../../src/Position'
 import Rectangle, { RectangleProps } from '../../src/Rectangle'
 
 interface WallProps extends RectangleProps {}
@@ -11,13 +12,14 @@ interface Wall extends IWall {
 }
 
 class Wall extends GameObject {
-  constructor({ width, height, posX, posY }: RectangleProps) {
+  constructor({ width, height, position }: RectangleProps) {
     super()
+    this.position = new Position({ ...position })
     this.collision = new Collision({
-      collisionRectangles: [{ width, height, posX, posY }],
+      collisionRectangles: [{ width, height, position: this.position }],
       id: this.id,
     })
-    this.rectangle = new Rectangle({ width, height, posX, posY })
+    this.rectangle = new Rectangle({ width, height, position })
   }
   update() {
     this.rectangle.draw()

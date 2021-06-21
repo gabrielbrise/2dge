@@ -35,12 +35,12 @@ class Collision {
               if (
                 this.id !== object.id &&
                 rectIntersect(
-                  collisionRect.posX,
-                  collisionRect.posY,
+                  collisionRect.position.x,
+                  collisionRect.position.y,
                   collisionRect.width,
                   collisionRect.height,
-                  objectColRect.posX,
-                  objectColRect.posY,
+                  objectColRect.position.x,
+                  objectColRect.position.y,
                   objectColRect.width,
                   objectColRect.height
                 )
