@@ -21,6 +21,7 @@ class Wall extends GameObject {
     })
     this.rectangle = new Rectangle({ width, height, position, stroke, fill })
     this.tags = ['solid']
+    this.layer = 1
   }
   update() {
     this.rectangle.draw()

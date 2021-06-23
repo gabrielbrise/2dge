@@ -76,6 +76,11 @@ class Canvas {
 
   add(newObject: any) {
     this.objects.push(newObject)
+    this.sortObjectsByLayer()
+  }
+
+  sortObjectsByLayer() {
+    this.objects.sort((a, b) => a.layer - b.layer)
   }
 
   remove(id: string) {

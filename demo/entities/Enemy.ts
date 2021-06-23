@@ -5,6 +5,7 @@ import Position from '2dge/Position'
 import { randomIntFromInterval } from '2dge/utils/numbers'
 import Collision from '2dge/Collision'
 import { Coordinates } from 'constants/types'
+import Status from '2dge/singletons/Status'
 
 interface IEnemy {}
 
@@ -13,6 +14,7 @@ interface Enemy extends IEnemy {}
 class Enemy extends GameObject {
   constructor(width: number, height: number, src: string, origin: Coordinates) {
     super()
+    this.status = Status.get()
     this.position = new Position({ x: origin[0], y: origin[1] })
     this.nextPosition = new Position({ x: origin[0], y: origin[1] })
     this.nextCollision = new Collision({
@@ -58,6 +60,7 @@ class Enemy extends GameObject {
   onCollision = (object: GameObject, target: GameObject) => {
     if (target.tags.includes('bullet')) {
       this.destroy()
+      ++this.status.score
     }
   }
 

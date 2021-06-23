@@ -5,9 +5,15 @@ import { SlimeIdle } from './assets/enemies/Slime'
 import Wall from './entities/Wall'
 import { randomIntFromInterval } from '2dge/utils/numbers'
 import Enemy from './entities/Enemy'
+import Status from '2dge/singletons/Status'
+import Score from './entities/Score'
 
 function init() {
   Canvas.start()
+  Status.start()
+  const status = Status.get()
+  status.score = 0
+  const score = new Score()
   const canvas = Canvas.get()
   const character = new Character(48, 48, RedGirlIdle)
   const wallCount = 5
@@ -32,6 +38,7 @@ function init() {
     canvas.add(enemy)
     // more statements
   }
+  canvas.add(score)
   canvas.add(character)
   canvas.draw(0)
 }

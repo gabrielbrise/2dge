@@ -6,6 +6,8 @@ interface GameObjectProps {}
 
 interface GameObject extends GameObjectProps {
   id: string
+  tags: string[]
+  layer: number
   [arg: string]: any
 }
 
@@ -15,6 +17,7 @@ class GameObject {
     this.id = uuidv4()
     this.destroy = this.destroy.bind(this)
     this.tags = []
+    this.layer = 0
   }
 
   destroy() {
