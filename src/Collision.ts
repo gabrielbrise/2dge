@@ -24,6 +24,7 @@ class Collision {
   }
 
   check() {
+    let collisions: any[] = []
     this.onCollision &&
       this.collisionRectangles.map((collisionRect) => {
         const filterCollisionableObjects = this.canvas.objects.filter(
@@ -45,12 +46,14 @@ class Collision {
                   objectColRect.height
                 )
               ) {
-                this.onCollision(this.id, object.id)
+                this.onCollision(this, object)
+                collisions.push([this, object])
               }
             }
           )
         })
       })
+    return collisions
   }
 }
 
