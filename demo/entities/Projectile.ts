@@ -1,10 +1,9 @@
-import { isOnScreen, moveStep, targetAngle } from '../../src/utils/coordinates'
-import Sprite from '../../src/Sprite'
-import Canvas from '../../src/singletons/Canvas'
-import { Coordinates } from '../../src/constants/types'
-import Collision, { ICollision } from '../../src/Collision'
-import GameObject from '../../src/GameObject'
-import Position from '../../src/Position'
+import { isOnScreen, moveStep, targetAngle } from '2dge/utils/coordinates'
+import Sprite from '2dge/Sprite'
+import { Coordinates } from '2dge/constants/types'
+import Collision, { ICollision } from '2dge/Collision'
+import GameObject from '2dge/GameObject'
+import Position from '2dge/Position'
 
 const uuidv4 = require('uuid/v4')
 

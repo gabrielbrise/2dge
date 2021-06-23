@@ -1,16 +1,10 @@
-import Projectile from './Projectile'
-import Bullet from '../assets/bullets/Bullet.png'
-import Sprite from '../../src/Sprite'
-import {
-  calculateDirectionVector,
-  isMoving,
-  isOnScreen,
-} from '../../src/utils/coordinates'
-import GameObject from '../../src/GameObject'
-import Position from '../../src/Position'
-import { randomIntFromInterval } from '../../src/utils/numbers'
-import Collision from '../../src/Collision'
-import { Coordinates } from '../../src/constants/types'
+import Sprite from '2dge/Sprite'
+import { isOnScreen } from '2dge/utils/coordinates'
+import GameObject from '2dge/GameObject'
+import Position from '2dge/Position'
+import { randomIntFromInterval } from '2dge/utils/numbers'
+import Collision from '2dge/Collision'
+import { Coordinates } from 'constants/types'
 
 interface IEnemy {}
 
@@ -61,7 +55,7 @@ class Enemy extends GameObject {
     this.sprite.draw()
   }
 
-  onCollision = (object, target) => {
+  onCollision = (object: GameObject, target: GameObject) => {
     if (target.tags.includes('bullet')) {
       this.destroy()
     }

@@ -1,4 +1,4 @@
-import Keyboard from './Keyboard'
+import Keyboard from 'singletons/Keyboard'
 
 export interface ICanvas {
   height: number

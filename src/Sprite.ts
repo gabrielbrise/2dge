@@ -1,5 +1,5 @@
 import { IPosition } from './Position'
-import Canvas, { ICanvas } from './singletons/Canvas'
+import Canvas, { ICanvas } from 'singletons/Canvas'
 
 export interface SpriteProps {
   width: number

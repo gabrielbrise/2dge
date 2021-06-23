@@ -1,9 +1,9 @@
 import Projectile from './Projectile'
 import Bullet from '../assets/bullets/Bullet.png'
-import Sprite from '../../src/Sprite'
-import { calculateDirectionVector, isMoving } from '../../src/utils/coordinates'
-import GameObject from '../../src/GameObject'
-import Position from '../../src/Position'
+import Sprite from '2dge/Sprite'
+import { calculateDirectionVector, isMoving } from '2dge/utils/coordinates'
+import GameObject from '2dge/GameObject'
+import Position from '2dge/Position'
 import {
   RedGirlIdle,
   RedGirlLeft,

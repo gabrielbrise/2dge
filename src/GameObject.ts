@@ -1,4 +1,4 @@
-import Canvas from './singletons/Canvas'
+import Canvas from 'singletons/Canvas'
 
 const uuidv4 = require('uuid/v4')
 

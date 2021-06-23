@@ -29,6 +29,12 @@ module.exports = {
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      '2dge': path.resolve(__dirname, './src'),
+      constants: path.resolve(__dirname, './src/constants/'),
+      singletons: path.resolve(__dirname, './src/singletons/'),
+      utils: path.resolve(__dirname, './src/utils/'),
+    },
   },
   output: {
     filename: 'bundle.js',

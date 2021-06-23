@@ -1,7 +1,7 @@
-import Collision, { ICollision } from '../../src/Collision'
-import GameObject from '../../src/GameObject'
-import Position from '../../src/Position'
-import Rectangle, { RectangleProps } from '../../src/Rectangle'
+import Collision, { ICollision } from '2dge/Collision'
+import GameObject from '2dge/GameObject'
+import Position from '2dge/Position'
+import Rectangle, { RectangleProps } from '2dge/Rectangle'
 
 interface WallProps extends RectangleProps {}
 

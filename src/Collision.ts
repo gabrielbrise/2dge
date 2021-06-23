@@ -1,6 +1,6 @@
-import Canvas, { ICanvas } from './singletons/Canvas'
-import { RectangleT } from './constants/types'
-import { rectIntersect } from './utils/collision'
+import Canvas, { ICanvas } from 'singletons/Canvas'
+import { RectangleT } from 'constants/types'
+import { rectIntersect } from 'utils/collision'
 
 export interface CollisionProps {
   collisionRectangles: RectangleT[]

@@ -1,9 +1,9 @@
-import Canvas from '../src/singletons/Canvas'
+import Canvas from '2dge/singletons/Canvas'
 import Character from './entities/Character'
 import { RedGirlIdle } from './assets/characters/RedGirl'
 import { SlimeIdle } from './assets/enemies/Slime'
 import Wall from './entities/Wall'
-import { randomIntFromInterval } from '../src/utils/numbers'
+import { randomIntFromInterval } from '2dge/utils/numbers'
 import Enemy from './entities/Enemy'
 
 function init() {
