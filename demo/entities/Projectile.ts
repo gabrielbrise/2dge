@@ -11,7 +11,7 @@ const uuidv4 = require('uuid/v4')
 interface ProjectileProps {
   width: number
   height: number
-  src: string[]
+  src: string
   velocity: number
   origin: Coordinates
   target: Coordinates
@@ -41,12 +41,14 @@ class Projectile extends GameObject {
       src,
       animationTime: 600,
       position: this.position,
+      frames: [{ x: 0, y: 0, width, height }],
     })
     this.velocity = velocity
     this.targetAngle = targetAngle(origin, target)
     this.key = this.canvas.keyboard
     this.origin = origin
     this.target = target
+    this.tags = ['bullet']
     this.id = uuidv4()
     this.collision = new Collision({
       onCollision: () => {

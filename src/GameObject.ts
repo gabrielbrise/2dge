@@ -14,6 +14,7 @@ class GameObject {
     this.canvas = Canvas.get()
     this.id = uuidv4()
     this.destroy = this.destroy.bind(this)
+    this.tags = []
   }
 
   destroy() {

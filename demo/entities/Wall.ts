@@ -12,14 +12,15 @@ interface Wall extends IWall {
 }
 
 class Wall extends GameObject {
-  constructor({ width, height, position }: RectangleProps) {
+  constructor({ width, height, position, stroke, fill }: RectangleProps) {
     super()
     this.position = new Position({ ...position })
     this.collision = new Collision({
       collisionRectangles: [{ width, height, position: this.position }],
       id: this.id,
     })
-    this.rectangle = new Rectangle({ width, height, position })
+    this.rectangle = new Rectangle({ width, height, position, stroke, fill })
+    this.tags = ['solid']
   }
   update() {
     this.rectangle.draw()

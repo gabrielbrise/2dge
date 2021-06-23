@@ -19,8 +19,8 @@ interface Canvas extends ICanvas {}
 class Canvas {
   private static instance: Canvas
   private constructor(
-    width: number = 640,
-    height: number = 480,
+    width: number = 1280,
+    height: number = 720,
     objects: any[] = []
   ) {
     this.height = height
@@ -54,7 +54,7 @@ class Canvas {
   draw(timestamp: DOMHighResTimeStamp) {
     this.timestamp = timestamp
     this.ctx.clearRect(0, 0, this.width, this.height)
-    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.4)'
+    this.ctx.fillStyle = ' #B3D48E'
     this.ctx.fillRect(0, 0, this.width, this.height)
     this.ctx.save()
     this.ctx.restore()
