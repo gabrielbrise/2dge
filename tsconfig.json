@@ -13,7 +13,8 @@
       "2dge/*": ["./src/*"],
       "constants/*": ["./src/constants/*"],
       "singletons/*": ["./src/singletons/*"],
-      "utils/*": ["./src/utils/*"]
+      "utils/*": ["./src/utils/*"],
+      "demo/*": ["./demo/*"]
     }
   }
 }

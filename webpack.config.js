@@ -34,6 +34,7 @@ module.exports = {
       constants: path.resolve(__dirname, './src/constants/'),
       singletons: path.resolve(__dirname, './src/singletons/'),
       utils: path.resolve(__dirname, './src/utils/'),
+      demo: path.resolve(__dirname, './demo/'),
     },
   },
   output: {
