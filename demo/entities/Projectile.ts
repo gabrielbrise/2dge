@@ -50,12 +50,20 @@ class Projectile extends GameObject {
     this.tags = ['bullet']
     this.id = uuidv4()
     this.collision = new Collision({
-      onCollision: () => {
-        this.destroy()
-      },
+      onCollision: this.onCollision,
       collisionRectangles: [{ position: this.position, width, height }],
       id: this.id,
     })
+  }
+
+  onCollision = (object: GameObject, target: GameObject) => {
+    if (target.tags.includes('wall')) {
+      this.destroy()
+    }
+    if (target.tags.includes('enemy')) {
+      --target.lifes
+      this.destroy()
+    }
   }
 
   update = () => {
@@ -72,10 +80,6 @@ class Projectile extends GameObject {
     const [x, y] = moveStep(this.origin, this.target, this.velocity)
     this.position.x = this.position.x + x
     this.position.y = this.position.y + y
-  }
-
-  destroy = () => {
-    this.canvas.remove(this.id)
   }
 }
 

@@ -14,6 +14,7 @@ class Score extends GameObject {
     super()
     this.status = Status.get()
     this.canvas = Canvas.get()
+    this.status.score = 0
     this.layer = 999
     this.canvas.ctx.font = '30px Arial'
   }

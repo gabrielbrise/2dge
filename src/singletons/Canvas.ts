@@ -86,6 +86,10 @@ class Canvas {
   remove(id: string) {
     this.objects = this.objects.filter((obj) => obj.id !== id)
   }
+
+  filterReset() {
+    this.ctx.filter = 'none'
+  }
 }
 
 export default Canvas

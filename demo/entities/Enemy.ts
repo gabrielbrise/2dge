@@ -12,7 +12,13 @@ interface IEnemy {}
 interface Enemy extends IEnemy {}
 
 class Enemy extends GameObject {
-  constructor(width: number, height: number, src: string, origin: Coordinates) {
+  constructor(
+    width: number,
+    height: number,
+    src: string,
+    origin: Coordinates,
+    lifes: number
+  ) {
     super()
     this.status = Status.get()
     this.position = new Position({ x: origin[0], y: origin[1] })
@@ -38,6 +44,8 @@ class Enemy extends GameObject {
         { x: 16 * 6, y: 0, width: 16, height: 16 },
       ],
     })
+    this.tags = ['enemy']
+    this.lifes = lifes
     this.walkingDuration = 200
     this.vector = this.randomDirection()
     this.collision = new Collision({
@@ -48,17 +56,28 @@ class Enemy extends GameObject {
   }
 
   update = () => {
+    this.isAlive()
     const collision = this.collision.check()
     if (collision.length === 0) {
       this.move()
     }
-
     this.sprite.animate()
+
+    if (this.lifes > 1) {
+      this.canvas.ctx.filter = `hue-rotate(${this.lifes * 90}deg)`
+    }
+
     this.sprite.draw()
+    this.canvas.filterReset()
   }
 
   onCollision = (object: GameObject, target: GameObject) => {
     if (target.tags.includes('bullet')) {
+    }
+  }
+
+  isAlive() {
+    if (this.lifes <= 0) {
       this.destroy()
       ++this.status.score
     }

@@ -10,6 +10,9 @@ import {
   RedGirlRight,
   RedGirlUp,
 } from '../assets/characters/RedGirl'
+import Collision from '2dge/Collision'
+import Status from '2dge/singletons/Status'
+import Canvas from '2dge/singletons/Canvas'
 
 interface ICharacter {
   key: any
@@ -22,7 +25,16 @@ class Character extends GameObject {
     super()
     this.key = this.canvas.keyboard
     this.key.addAction('click', this.action)
+    this.immunityTime = 0
+    this.canvas = Canvas.get()
+
     this.position = new Position({ x: 150, y: 150 })
+    this.status = Status.get()
+    this.collision = new Collision({
+      id: this.id,
+      onCollision: this.onCollision,
+      collisionRectangles: [{ position: this.position, width, height }],
+    })
     this.sprite = new Sprite({
       width,
       height,
@@ -42,11 +54,28 @@ class Character extends GameObject {
   }
 
   update = () => {
+    this.collision.check()
     if (isMoving(this.key)) {
       this.move()
     }
+    if (this.immunityTime) {
+      this.canvas.ctx.filter = `invert(${this.immunityTime}%)`
+    }
+    if (this.immunityTime > 0) {
+      --this.immunityTime
+    }
     this.sprite.draw()
+    this.canvas.ctx.filter = 'none'
     this.sprite.animate()
+  }
+
+  onCollision = (object: GameObject, target: GameObject) => {
+    if (target.tags.includes('enemy')) {
+      if (this.immunityTime <= 0) {
+        --this.status.lifes
+        this.immunityTime = 60
+      }
+    }
   }
 
   action = (e: MouseEvent) => {
@@ -64,7 +93,6 @@ class Character extends GameObject {
 
   move = () => {
     const vector = calculateDirectionVector(this.key)
-    console.log(vector)
     if (vector.x === -1) this.sprite.image.src = RedGirlLeft
     if (vector.x === 1) this.sprite.image.src = RedGirlRight
     if (vector.y === -1) this.sprite.image.src = RedGirlUp
