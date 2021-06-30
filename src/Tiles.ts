@@ -1,20 +1,24 @@
 import Canvas, { ICanvas } from './singletons/Canvas'
+import Sprite from './Sprite'
+import { getRowColumnCount, getRowColumnPosition } from './utils/tiles'
 
 interface TilesProps {
   size: number
   animationTime: number
   tileSheet: {
-    frames: number[]
     src: string
+    frames?: { x: number; y: number; width: number; height: number }[]
   }
-  grid: boolean[]
+  grid: number[][]
 }
 
 interface Tiles extends TilesProps {
   canvas: ICanvas
   image: HTMLImageElement
   canvasGrid: { rows: number; columns: number }
+  canvasMatrice: number[][]
   tileSheetGrid: { rows: number; columns: number }
+  sprites: Sprite[]
 }
 
 class Tiles {
@@ -26,58 +30,54 @@ class Tiles {
     this.canvas = Canvas.get()
     this.image = new Image()
     this.image.src = tileSheet.src
-    this.canvasGrid = this.getRowColumnCount(
+    this.canvasGrid = getRowColumnCount(
       this.canvas.width,
       this.canvas.height,
       size
     )
-    this.tileSheetGrid = this.getRowColumnCount(
+    this.tileSheetGrid = getRowColumnCount(
       this.image.width,
       this.image.height,
       size
     )
+    this.sprites = this.createTileSprites()
   }
 
   update = () => {
     this.draw()
   }
 
-  getRowColumnCount = (width: number, height: number, size: number) => ({
-    rows: height / size,
-    columns: width / size,
-  })
-
-  getRowColumnPosition = (row: number, column: number, size: number) => ({
-    x: column * size,
-    y: row * size,
-  })
-
-  draw = () => {
-    this.grid.forEach((cell, index) => {
-      cell &&
-        this.canvas.ctx.drawImage(
-          this.image,
-          this.currentFrame.x,
-          this.currentFrame.y,
-          this.currentFrame.width,
-          this.currentFrame.height,
-          this.position.x,
-          this.position.y,
-          this.width,
-          this.height
-        )
+  createTileSprites = () => {
+    let sprites
+    this.canvasMatrice.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
+        if (cell) {
+          const spritePosition = getRowColumnPosition(
+            rowIndex + 1,
+            columnIndex + 1,
+            this.size
+          )
+          sprites.push(
+            new Sprite({
+              width: this.size,
+              height: this.size,
+              src: this.tileSheet.src,
+              animationTime: this.animationTime,
+              position: spritePosition,
+              frames: this.tileSheet.frames,
+            })
+          )
+        }
+      })
     })
+    return sprites
   }
 
-  animate() {
-    if (this.tileSheet.range.length > 0) {
-      const frame = Math.floor(
-        ((this.canvas.timestamp + this.animationTime) /
-          (this.animationTime / this.frames.length)) %
-          this.frames.length
-      )
-      this.currentFrame = this.frames[frame]
-    }
+  draw = () => {
+    this.sprites.forEach((sprite, index) => {
+      sprite.animate()
+      sprite.draw()
+    })
   }
 }
 

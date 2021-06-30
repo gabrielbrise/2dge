@@ -18,7 +18,7 @@ function init() {
   const canvas = Canvas.get()
   const character = new Character(48, 48, RedGirlIdle)
   const wallCount = 5
-  const enemyCount = 80
+  const enemyCount = 20
   for (var i = 0; i < wallCount; i++) {
     let wall = new Wall({
       width: randomIntFromInterval(10, 100),
